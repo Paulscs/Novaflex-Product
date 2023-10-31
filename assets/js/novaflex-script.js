@@ -93,7 +93,7 @@ jQuery(document).ready(function ($) {
             }
         });
 
-        let productName = $('.product_title').text().replace(/ /g, '-');
+        let productName = $('.product_title').text().replace(/ /g, '');
 
         if (allChecked) {
             // Set the download attribute with the desired file name (optional)
@@ -102,7 +102,7 @@ jQuery(document).ready(function ($) {
             labelTexts = productName;
             checkboxes.each(function () {
                 if ($(this).is(":checked")) {
-                    let labelText = $(this).parent().text().trim().replace(/ /g, '-');
+                    let labelText = $(this).attr('data-name');
                     labelTexts = labelTexts + '-'  + labelText;
                 }
             });

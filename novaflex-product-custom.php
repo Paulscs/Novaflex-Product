@@ -82,11 +82,14 @@ function led_new_product_tab_content() {
         echo '<form action="" id="downloadable-files-form" method="post">';
         if ($pdf_files) {
             foreach ($pdf_files as $pdf_file_url) {
+                $file_name = esc_html(basename($pdf_file_url['name']));
+                $pdf_file_name = preg_replace("/[^a-zA-Z0-9]+/", "", $file_name);
+                
                 echo '<label>';
-                echo '<input type="checkbox" id="cb1" name="selected_files[]" value="' . esc_attr($pdf_file_url['file-url']) . '">';
+                echo '<input type="checkbox" name="selected_files[]" data-name="'. $pdf_file_name . '" value="' . esc_attr($pdf_file_url['file-url']) . '">';
                 echo '<span class="checkbox-tooltip">Select for download</span>'; // Add the "Select for download" tooltip for the checkbox
                 echo '<a href="' . esc_attr($pdf_file_url['file-url']) . '" target="_blank">';
-                echo '<span class="checkbox-text">' . esc_html(basename($pdf_file_url['name'])) . '</span>';
+                echo '<span class="checkbox-text">' . $file_name . '</span>';
                 echo '<span class="tooltip">Preview File</span></a>'; // Add the "Preview File" tooltip for the text
                 echo '</label>';
                 echo '<br>';
