@@ -1,80 +1,75 @@
 jQuery(document).ready(function ($) {
+    // Disable the "Download" button on page load
+    $('#download-button').prop('disabled', true);
 
-    //To handle dynamic position of the tooltip
-    $('tooltip').hover(function () {
-        var tooltip = $(this).find('.tooltip');
-        var labelRect = this.getBoundingClientRect();
-        var tooltipRect = tooltip[0].getBoundingClientRect();
-        var cursorX = labelRect.left + labelRect.width;
-        var cursorY = labelRect.top;
-        var tooltipX = cursorX;
-        var tooltipY = cursorY - tooltipRect.height;
-
-        tooltip.css({
-            top: tooltipY + 'px',
-            left: tooltipX + 'px'
-        });
-    });
-
-    $(document).ready(function () {
-        // Disable the "Download" button on page load
-        $('#download-button').prop('disabled', true);
-    
-        // Add an event listener to all the checkboxes
-        $('input[type="checkbox"]').change(function () {
-            // Check if any checkboxes are checked
-            if ($('input[type="checkbox"]:checked').length > 0) {
-                // Enable the "Download" button
-                $('#download-button').prop('disabled', false);
-            } else {
-                // Disable the "Download" button
-                $('#download-button').prop('disabled', true);
-            }
-        });
-    });
-    
-    
-    $(document).ready(function () {
-        var isMobile = window.innerWidth <= 768; // Adjust the width as needed
-    
-        if (isMobile) {
-            $('.tooltip, .checkbox-tooltip').hide(); // Hide both tooltips on mobile devices
+    // Add an event listener to all the checkboxes
+    $('input[type="checkbox"]').change(function () {
+        // Check if any checkboxes are checked
+        if ($('input[type="checkbox"]:checked').length > 0) {
+            // Enable the "Download" button
+            $('#download-button').prop('disabled', false);
+        } else {
+            // Disable the "Download" button
+            $('#download-button').prop('disabled', true);
         }
-    
-        // Handle the "Select for download" tooltip when hovering over the checkbox
-        $('label input[type="checkbox"]').hover(function () {
-            var checkboxTooltip = $(this).siblings('.checkbox-tooltip');
-            var isMobile = window.innerWidth <= 768; // Recheck on hover
-    
-            if (!isMobile) {
-                checkboxTooltip.show(); // Display the "Select for download" tooltip for the checkbox
-                $(this).parents('label').find('.tooltip').hide(); // Hide the "Preview File" tooltip
-            }
-        }, function () {
-            $(this).siblings('.checkbox-tooltip').hide(); // Hide the "Select for download" tooltip on mouseout
-        });
-    
-        // Handle the "Preview File" tooltip when hovering over the text
-        $('label a').hover(function () {
-            var previewFileTooltip = $(this).find('.tooltip');
-            var isMobile = window.innerWidth <= 768; // Recheck on hover
-    
-            if (!isMobile) {
-                previewFileTooltip.show(); // Display the "Preview File" tooltip for the text
-                $(this).parents('label').find('.checkbox-tooltip').hide(); // Hide the "Select for download" tooltip
-            }
-        }, function () {
-            $(this).find('.tooltip').hide(); // Hide the "Preview File" tooltip on mouseout
-        });
-    
-        $('label').on('click', function () {
-            var isMobile = window.innerWidth <= 768; // Recheck on click
-            if (isMobile) {
-                $(this).find('.tooltip, .checkbox-tooltip').hide(); // Hide both tooltips on mobile devices when clicked
-            }
-        });
     });
+
+    // Handle the click event on the item name and SVG icon
+    $('label.file-checkbox').on('click', function (e) {
+        var checkbox = $(this).find('input[type="checkbox"]');
+        
+        // Check if the click is on the checkbox
+        if (!$(e.target).is('input[type="checkbox"]')) {
+            e.preventDefault(); // Prevent the default behavior of the anchor tag
+            
+            // Get the PDF file URL associated with the clicked item
+            var pdfUrl = checkbox.attr('data-file-url');
+            
+            console.log('Previewing PDF:', pdfUrl); // Log the URL to the console
+            
+            // Open the PDF file in a new tab
+            window.open(pdfUrl, '_blank');
+        }
+    });
+
+    var isMobile = window.innerWidth <= 768; // Adjust the width as needed
     
+    if (isMobile) {
+        $('.tooltip, .checkbox-tooltip').hide(); // Hide both tooltips on mobile devices
+    }
+
+    // Handle the "Select for download" tooltip when hovering over the checkbox
+    $('label input[type="checkbox"]').hover(function () {
+        var checkboxTooltip = $(this).siblings('.checkbox-tooltip');
+        var isMobile = window.innerWidth <= 768; // Recheck on hover
+
+        if (!isMobile) {
+            checkboxTooltip.show(); // Display the "Select for download" tooltip for the checkbox
+            $(this).parents('label').find('.tooltip').hide(); // Hide the "Preview File" tooltip
+        }
+    }, function () {
+        $(this).siblings('.checkbox-tooltip').hide(); // Hide the "Select for download" tooltip on mouseout
+    });
+
+    // Handle the "Preview File" tooltip when hovering over the text
+    $('label a').hover(function () {
+        var previewFileTooltip = $(this).find('.tooltip');
+        var isMobile = window.innerWidth <= 768; // Recheck on hover
+
+        if (!isMobile) {
+            previewFileTooltip.show(); // Display the "Preview File" tooltip for the text
+            $(this).parents('label').find('.checkbox-tooltip').hide(); // Hide the "Select for download" tooltip
+        }
+    }, function () {
+        $(this).find('.tooltip').hide(); // Hide the "Preview File" tooltip on mouseout
+    });
+
+    $('label').on('click', function () {
+        var isMobile = window.innerWidth <= 768; // Recheck on click
+        if (isMobile) {
+            $(this).find('.tooltip, .checkbox-tooltip').hide(); // Hide both tooltips on mobile devices when clicked
+        }
+    });
 
     $('#downloadable-files-form').on('submit', function (e) {
         e.preventDefault();
@@ -147,7 +142,6 @@ jQuery(document).ready(function ($) {
             }
         });
     });
-    
 
     function hideAdditionalInfo() {
         $('#additional-info-container').hide();
@@ -183,3 +177,15 @@ jQuery(document).ready(function ($) {
         var checkboxes = $("input[name='selected_files[]']");
     });
 });
+
+jQuery(document).ready(function ($) {
+    // Add a click event listener to the tabs
+    $('#tab-title-description, #tab-title-led_downloads').click(function () {
+        // Remove the 'active' class from all tabs
+        $('#tab-title-description, #tab-title-led_downloads').removeClass('active');
+
+        // Add the 'active' class to the clicked tab
+        $(this).addClass('active');
+    });
+});
+

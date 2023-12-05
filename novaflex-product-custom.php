@@ -69,11 +69,13 @@ function led_new_product_tab_content() {
     if (empty($pdf_files) && empty($other_files)) {
         
     } else {
-        // Output the title in bold
-        echo '<h2 style="margin-bottom: 5px;"><strong>' . __('Documents', 'woocommerce') . '</strong></h2>';
+
 
         // Output the additional text below the title
         if (!empty($pdf_files)) {
+            // Output the title in bold
+            echo '<h2 style="margin-bottom: 5px;"><strong>' . __('Documents', 'woocommerce') . '</strong></h2>';
+            
             echo '<p style="font-weight: bold; font-size: smaller; margin-top: 0;">Select which sections you would like to be merged into one PDF.</p>';
         }
 
@@ -84,17 +86,24 @@ function led_new_product_tab_content() {
             foreach ($pdf_files as $pdf_file_url) {
                 $file_name = esc_html(basename($pdf_file_url['name']));
                 $pdf_file_name = preg_replace("/[^a-zA-Z0-9]+/", "", $file_name);
-                
-                echo '<label>';
-                echo '<input type="checkbox" name="selected_files[]" data-name="'. $pdf_file_name . '" value="' . esc_attr($pdf_file_url['file-url']) . '">';
-                echo '<span class="checkbox-tooltip">Select for download</span>'; // Add the "Select for download" tooltip for the checkbox
-                echo '<a href="' . esc_attr($pdf_file_url['file-url']) . '" target="_blank">';
+
+                // Make sure to set the data-file-url attribute here
+                $pdf_file_url_attr = esc_attr($pdf_file_url['file-url']);
+
+                echo '<label class="file-checkbox">';
+                echo '<input type="checkbox" name="selected_files[]" data-name="' . $pdf_file_name . '" data-file-url="' . $pdf_file_url_attr . '" value="' . $pdf_file_url_attr . '">';
+
+                // SVG icon with the clickon event
+                $icon_path = plugin_dir_url(__FILE__) . 'assets/icons/externalwindow.svg';
+                echo '<img src="' . $icon_path . '" class="preview-icon spacing" alt="Preview" title="Preview File" data-file-url="' . $pdf_file_url_attr . '">';
+
                 echo '<span class="checkbox-text">' . $file_name . '</span>';
-                echo '<span class="tooltip">Preview File</span></a>'; // Add the "Preview File" tooltip for the text
                 echo '</label>';
                 echo '<br>';
             }
         }
+        echo '</form>';
+
 
         // Output the download button only when there are PDF files and loading spinner 
     if ($pdf_files) {
