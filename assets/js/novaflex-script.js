@@ -176,6 +176,31 @@ jQuery(document).ready(function ($) {
         // Get all checkboxes with the name 'selected_files[]'
         var checkboxes = $("input[name='selected_files[]']");
     });
+
+    function HideAdditionalInformationTitle() {
+        // Check if the table inside #additional-info-container is empty
+        var additionalInfoTable = $('#additional-info-container table.woocommerce-product-attributes');
+    
+        // Check if the table is empty or not
+        if (!additionalInfoTable.length || !additionalInfoTable.find('tbody').children().length) {
+            // If the table is empty, hide the title
+            $('#additional-info-container h2').hide();
+        }
+    }
+
+    function hideOtherDownloadsTitle() {
+        // Check if #individual-downloads has no content
+        if ($('#individual-downloads').is(':empty')) {
+            // If it's empty, hide the title using the specified class
+            $('.other-downloads-title').hide();
+        } else {
+            // If it has content, show the title
+            $('.other-downloads-title').show();
+        }
+    }
+
+    hideOtherDownloadsTitle();
+    HideAdditionalInformationTitle();
 });
 
 jQuery(document).ready(function ($) {

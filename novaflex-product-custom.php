@@ -3,7 +3,7 @@
 Plugin Name:  Novaflex Product Custom
 Plugin URI:   https://novaflexled.com
 Description:  This plugin is used for the customization of the features of website
-Version:      1.0
+Version:      1.1
 Author:       Calderon
 Author URI:   https://novaflexled.com
 License:      GPL2
@@ -67,9 +67,8 @@ function led_new_product_tab_content() {
 
 
     if (empty($pdf_files) && empty($other_files)) {
-        
-    } else {
-
+        return false;
+    }
 
         // Output the additional text below the title
         if (!empty($pdf_files)) {
@@ -78,7 +77,6 @@ function led_new_product_tab_content() {
             
             echo '<p style="font-weight: bold; font-size: smaller; margin-top: 0;">Select which sections you would like to be merged into one PDF.</p>';
         }
-
         
         // Output the form with checkboxes
         echo '<form action="" id="downloadable-files-form" method="post">';
@@ -92,17 +90,15 @@ function led_new_product_tab_content() {
 
                 echo '<label class="file-checkbox">';
                 echo '<input type="checkbox" name="selected_files[]" data-name="' . $pdf_file_name . '" data-file-url="' . $pdf_file_url_attr . '" value="' . $pdf_file_url_attr . '">';
-
                 // SVG icon with the clickon event
                 $icon_path = plugin_dir_url(__FILE__) . 'assets/icons/externalwindow.svg';
                 echo '<img src="' . $icon_path . '" class="preview-icon spacing" alt="Preview" title="Preview File" data-file-url="' . $pdf_file_url_attr . '">';
-
+                echo '<a href="' . esc_attr($pdf_file_url['file-url']) . '" target="_blank">';
                 echo '<span class="checkbox-text">' . $file_name . '</span>';
+                echo '</a>';
                 echo '</label>';
-                echo '<br>';
             }
         }
-        echo '</form>';
 
 
         // Output the download button only when there are PDF files and loading spinner 
@@ -114,11 +110,12 @@ function led_new_product_tab_content() {
 
         echo '<button id="download-button" type="submit" name="download_files">' . __('Download', 'woocommerce') . '</button>';
     }
-    echo '</form><div id="download-link-container"></div>';
-}
+    
+    echo '</form>';
+    echo '<div id="download-link-container"></div>';
 
     // Output the "Other Downloads" area
-    echo '<h2 style="margin-top: 20px;"><strong style="font-size: 20px;">' . __('Other Downloads', 'woocommerce') . '</strong></h2>';
+    echo '<h2 class="other-downloads-title" style="margin-top: 20px;"><strong style="font-size: 20px;">' . __('Other Downloads', 'woocommerce') . '</strong></h2>';
     echo '<div id="individual-downloads">';
 
     /* *********************** OTHER DOWNLOAD SECTION   *********************** */
@@ -212,6 +209,8 @@ function led_handle_download_files()
         // Specify the destination path for the merged PDF
         $destination_filename = wp_unique_filename($destination_dir, $_POST['label_text'] . '.pdf');
         $destination_path = $destination_dir . '/' . $destination_filename;
+
+        error_log('generate ' . $destination_path);
 
         // Merge the PDFs
         $pdf->merge('file', $destination_path);
