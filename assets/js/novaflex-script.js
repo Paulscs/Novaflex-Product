@@ -14,24 +14,6 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    // Handle the click event on the item name and SVG icon
-    $('label.file-checkbox').on('click', function (e) {
-        var checkbox = $(this).find('input[type="checkbox"]');
-        
-        // Check if the click is on the checkbox
-        if (!$(e.target).is('input[type="checkbox"]')) {
-            e.preventDefault(); // Prevent the default behavior of the anchor tag
-            
-            // Get the PDF file URL associated with the clicked item
-            var pdfUrl = checkbox.attr('data-file-url');
-            
-            console.log('Previewing PDF:', pdfUrl); // Log the URL to the console
-            
-            // Open the PDF file in a new tab
-            window.open(pdfUrl, '_blank');
-        }
-    });
-
     var isMobile = window.innerWidth <= 768; // Adjust the width as needed
     
     if (isMobile) {

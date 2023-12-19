@@ -92,8 +92,8 @@ function led_new_product_tab_content() {
                 echo '<input type="checkbox" name="selected_files[]" data-name="' . $pdf_file_name . '" data-file-url="' . $pdf_file_url_attr . '" value="' . $pdf_file_url_attr . '">';
                 // SVG icon with the clickon event
                 $icon_path = plugin_dir_url(__FILE__) . 'assets/icons/externalwindow.svg';
-                echo '<img src="' . $icon_path . '" class="preview-icon spacing" alt="Preview" title="Preview File" data-file-url="' . $pdf_file_url_attr . '">';
                 echo '<a href="' . esc_attr($pdf_file_url['file-url']) . '" target="_blank">';
+                echo '<img src="' . $icon_path . '" class="preview-icon spacing" alt="Preview" title="Preview File" data-file-url="' . $pdf_file_url_attr . '">';
                 echo '<span class="checkbox-text">' . $file_name . '</span>';
                 echo '</a>';
                 echo '</label>';
