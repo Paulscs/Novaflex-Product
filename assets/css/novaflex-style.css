@@ -127,10 +127,6 @@ label input[type="checkbox"] {
     margin-top: 10px;
 }
 
-label:hover .tooltip {
-    display: block;
-}
-
 label a {
     color: black; /* Set the text color to black */
     text-decoration: none; /* Remove any underline by default */
@@ -145,22 +141,6 @@ label a:hover {
     .tooltip {
         display: none !important;
     }
-}
-
-.checkbox-tooltip,
-.tooltip {
-    display: none;
-}
-
-.checkbox-tooltip {
-    position: absolute;
-    display: none;
-    background: #333;
-    color: #fff;
-    padding: 5px;
-    border-radius: 5px;
-    font-size: 12px;
-    z-index: 1;
 }
 
 /* Increase the size and border of the checkboxes with !important */
@@ -205,5 +185,34 @@ img.preview-icon {
 
 /* Style for the active tabs */
 #tab-title-description.active, #tab-title-led_downloads.active {
-    border: 2px solid black !important;
+    background-color: #f28414;
+    border-color:#023047 !important;
+    color: white;
+}
+
+/* Style to change padding of download form in spp */
+#tab-led_downloads {
+    padding-top: 10px;
+}
+
+.subtext-documents {
+    margin-top: 10px !important;
+    margin-bottom: 13px !important;
+}
+
+.text-documents {
+    margin-top: 20px !important;
+}
+
+#download-button {
+    margin-top: 10px;
+}
+
+.other-downloads-title{
+    margin-bottom: 5px !important;
+    margin-top: 15px !important;
+}
+
+#downloadable-files-form{
+    margin-bottom: 1px !important;
 }

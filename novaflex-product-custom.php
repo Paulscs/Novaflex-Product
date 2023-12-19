@@ -73,9 +73,9 @@ function led_new_product_tab_content() {
         // Output the additional text below the title
         if (!empty($pdf_files)) {
             // Output the title in bold
-            echo '<h2 style="margin-bottom: 5px;"><strong>' . __('Documents', 'woocommerce') . '</strong></h2>';
+            echo '<h2 class="text-documents" style="margin-bottom: 5px;"><strong>' . __('Documents', 'woocommerce') . '</strong></h2>';
             
-            echo '<p style="font-weight: bold; font-size: smaller; margin-top: 0;">Select which sections you would like to be merged into one PDF.</p>';
+            echo '<p class="subtext-documents" style="font-weight: bold; font-size: smaller; margin-top: 0;">Select which sections you would like to be merged into one PDF.</p>';
         }
         
         // Output the form with checkboxes
@@ -112,8 +112,6 @@ function led_new_product_tab_content() {
     }
     
     echo '</form>';
-    echo '<div id="download-link-container"></div>';
-
     // Output the "Other Downloads" area
     echo '<h2 class="other-downloads-title" style="margin-top: 20px;"><strong style="font-size: 20px;">' . __('Other Downloads', 'woocommerce') . '</strong></h2>';
     echo '<div id="individual-downloads">';
